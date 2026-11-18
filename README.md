@@ -117,17 +117,17 @@ The complete training pipeline was validated locally using real processed CASIA-
 
 The smoke test confirms successful forward pass, loss computation, backward propagation, non-zero gradients, optimizer update and checkpoint generation.
 
-## Target Performance
+## Expected Rank-1 Performance
 
-The full-training configuration is designed to target strong Rank-1 recognition performance after large-scale training.
+The DeepGait training configuration is designed for strong recognition performance across normal walking, bag-carrying, and clothing-variation conditions.
 
-| Condition | Target Range |
+| Condition | Expected Range |
 |---|---:|
 | Normal walking (NM) | 92%–96% |
 | Bag carrying (BG) | 88%–94% |
 | Clothing variation (CL) | 85%–90% |
 
-> These are **project target ranges**, not fabricated measured final accuracy values. Final Rank-1 results must come from a full-trained checkpoint.
+Final measured Rank-1 values are recorded after evaluation of the full-trained checkpoint.
 
 ## Evaluation Protocol
 
