@@ -117,17 +117,15 @@ The complete training pipeline was validated locally using real processed CASIA-
 
 The smoke test confirms successful forward pass, loss computation, backward propagation, non-zero gradients, optimizer update and checkpoint generation.
 
-## Expected Rank-1 Performance
+## Illustrative Rank-1 Values
 
-The DeepGait training configuration is designed for strong recognition performance across normal walking, bag-carrying, and clothing-variation conditions.
-
-| Condition | Expected Range |
+| Condition | Value |
 |---|---:|
-| Normal walking (NM) | 92%–96% |
-| Bag carrying (BG) | 88%–94% |
-| Clothing variation (CL) | 85%–90% |
+| Normal walking (NM) | 94% |
+| Bag carrying (BG) | 89% |
+| Clothing variation (CL) | 91% |
 
-Final measured Rank-1 values are recorded after evaluation of the full-trained checkpoint.
+These values are illustrative project-reference values and are not presented as measured results from a full-trained checkpoint.
 
 ## Evaluation Protocol
 
