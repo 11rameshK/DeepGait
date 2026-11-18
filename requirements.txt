@@ -1,0 +1,11 @@
+torch==2.11.0
+torchvision==0.26.0
+numpy
+opencv-python
+tqdm
+pyyaml
+tensorboard
+py7zr
+kornia
+einops
+Pillow

@@ -1,0 +1,32 @@
+project:
+  name: DeepGait
+  base_model: GGCN
+paths:
+  casiab_raw: "C:/Users/RAMESH/Desktop/Projects/Nikhil 9000/CASIA-B"
+  casiab_pkl: "C:/Users/RAMESH/Desktop/Projects/Nikhil 9000/CASIA-B-pkl"
+  opengait: "C:/Users/RAMESH/Desktop/Projects/Nikhil 9000/OpenGait-master"
+data:
+  image_height: 64
+  image_width: 44
+  train_subjects: [1, 74]
+  test_subjects: [75, 124]
+  frames_per_sequence: 30
+  conditions:
+    nm: 6
+    bg: 2
+    cl: 2
+training:
+  optimizer: Adam
+  learning_rate: 0.0001
+  momentum: 0.9
+  triplet_margin: 0.2
+  lambda_g1: 0.01
+  lambda_g2: 0.1
+  paper_iterations_casiab: 160000
+evaluation:
+  gallery: [nm-01, nm-02, nm-03, nm-04]
+  probes:
+    nm: [nm-05, nm-06]
+    bg: [bg-01, bg-02]
+    cl: [cl-01, cl-02]
+  metric: euclidean

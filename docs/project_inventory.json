@@ -1,0 +1,186 @@
+[
+  {
+    "path": "configs\\project.yaml",
+    "bytes": 745
+  },
+  {
+    "path": "docs\\diagrams\\01_System_Architecture.png",
+    "bytes": 78497
+  },
+  {
+    "path": "docs\\diagrams\\02_Methodology_Workflow.png",
+    "bytes": 67044
+  },
+  {
+    "path": "docs\\diagrams\\03_Logical_Component_Diagram.png",
+    "bytes": 61504
+  },
+  {
+    "path": "docs\\diagrams\\04_Behavioural_Activity_Diagram.png",
+    "bytes": 53624
+  },
+  {
+    "path": "docs\\diagrams\\05_Data_Flow_Diagram_Level_0.png",
+    "bytes": 51734
+  },
+  {
+    "path": "docs\\diagrams\\06_Data_Repository_Structure_-_ER_Not_Applicable.png",
+    "bytes": 63945
+  },
+  {
+    "path": "docs\\diagrams\\DeepGait_Project_Diagrams.drawio",
+    "bytes": 37036
+  },
+  {
+    "path": "docs\\diagrams\\DeepGait_Project_Diagrams_Package.zip",
+    "bytes": 348617
+  },
+  {
+    "path": "docs\\diagrams\\README.txt",
+    "bytes": 107
+  },
+  {
+    "path": "docs\\FINAL_VERIFICATION_REPORT.md",
+    "bytes": 7225
+  },
+  {
+    "path": "docs\\project_inventory.json",
+    "bytes": 3339
+  },
+  {
+    "path": "docs\\reference\\GGCN_Base_Paper_2026.pdf",
+    "bytes": 2827230
+  },
+  {
+    "path": "docs\\review\\DeepGait_Detailed_Progress_Report.pdf",
+    "bytes": 213477
+  },
+  {
+    "path": "docs\\review\\DeepGait_Project_Blueprint_Reviewed.xlsx",
+    "bytes": 44292
+  },
+  {
+    "path": "docs\\review\\DeepGait_Review_Presentation.pptx",
+    "bytes": 737972
+  },
+  {
+    "path": "docs\\System_Design_and_Methodology.md",
+    "bytes": 2737
+  },
+  {
+    "path": "outputs\\smoke_checkpoint.pt",
+    "bytes": 54736745
+  },
+  {
+    "path": "outputs\\smoke_history.json",
+    "bytes": 194
+  },
+  {
+    "path": "README.md",
+    "bytes": 2869
+  },
+  {
+    "path": "requirements.txt",
+    "bytes": 105
+  },
+  {
+    "path": "scripts\\__pycache__\\build_diagrams.cpython-311.pyc",
+    "bytes": 17845
+  },
+  {
+    "path": "scripts\\__pycache__\\evaluate_casiab.cpython-311.pyc",
+    "bytes": 5543
+  },
+  {
+    "path": "scripts\\__pycache__\\infer_query.cpython-311.pyc",
+    "bytes": 4373
+  },
+  {
+    "path": "scripts\\__pycache__\\smoke_train.cpython-311.pyc",
+    "bytes": 5970
+  },
+  {
+    "path": "scripts\\__pycache__\\train_gpu.cpython-311.pyc",
+    "bytes": 5884
+  },
+  {
+    "path": "scripts\\build_diagrams.py",
+    "bytes": 10089
+  },
+  {
+    "path": "scripts\\compare_archives.py",
+    "bytes": 959
+  },
+  {
+    "path": "scripts\\dataset_stats.py",
+    "bytes": 1434
+  },
+  {
+    "path": "scripts\\evaluate_casiab.py",
+    "bytes": 2672
+  },
+  {
+    "path": "scripts\\infer_query.py",
+    "bytes": 1730
+  },
+  {
+    "path": "scripts\\preprocess_casiab.bat",
+    "bytes": 192
+  },
+  {
+    "path": "scripts\\preprocess_casiab_64x44.py",
+    "bytes": 1815
+  },
+  {
+    "path": "scripts\\quick_verify_processed.py",
+    "bytes": 897
+  },
+  {
+    "path": "scripts\\repair_casiab.py",
+    "bytes": 1169
+  },
+  {
+    "path": "scripts\\smoke_train.py",
+    "bytes": 2329
+  },
+  {
+    "path": "scripts\\test_model_shapes.py",
+    "bytes": 623
+  },
+  {
+    "path": "scripts\\train_gpu.py",
+    "bytes": 2422
+  },
+  {
+    "path": "scripts\\validate_pkl_64x44.py",
+    "bytes": 1228
+  },
+  {
+    "path": "scripts\\verify_casiab_integrity.py",
+    "bytes": 1542
+  },
+  {
+    "path": "src\\__pycache__\\dataset.cpython-311.pyc",
+    "bytes": 6814
+  },
+  {
+    "path": "src\\__pycache__\\deepgait_model.cpython-311.pyc",
+    "bytes": 17954
+  },
+  {
+    "path": "src\\__pycache__\\losses.cpython-311.pyc",
+    "bytes": 1764
+  },
+  {
+    "path": "src\\dataset.py",
+    "bytes": 2895
+  },
+  {
+    "path": "src\\deepgait_model.py",
+    "bytes": 7753
+  },
+  {
+    "path": "src\\losses.py",
+    "bytes": 722
+  }
+]
