@@ -1,56 +1,302 @@
-# DeepGait Project
+# DeepGait: Generative Feature Fusion for Robust Gait-Based Identification
 
-## Project
-DeepGait: Beyond the Silhouette — Generative Feature Fusion for Robust Gait-Based Identification.
+![Python](https://img.shields.io/badge/Python-3.11-blue)
+![PyTorch](https://img.shields.io/badge/PyTorch-2.11-orange)
+![Dataset](https://img.shields.io/badge/Dataset-CASIA--B-green)
+![Status](https://img.shields.io/badge/Project-Verified-success)
 
-## Primary source
-GGCN: Gait Recognition with Generate Network and Convolutional Neural Network (Hao Qin et al., JVCIR 2026).
+Final-year B.Tech Information Technology project focused on robust person identification from gait silhouette sequences.
 
-## Local paths
-- Raw CASIA-B silhouettes: C:\Users\RAMESH\Desktop\Projects\Nikhil 9000\CASIA-B
-- Processed CASIA-B target: C:\Users\RAMESH\Desktop\Projects\Nikhil 9000\CASIA-B-pkl
-- OpenGait: C:\Users\RAMESH\Desktop\Projects\Nikhil 9000\OpenGait-master
+## Project Team
 
-## Locked implementation plan
-1. Prepare CASIA-B: 124 subjects, NM/BG/CL, 11 views.
-2. Convert silhouettes to custom 64x44 pickle sequences, matching the GGCN encoder input used in this project.
-3. Verify first-74 train / last-50 test partition.
-4. Run a baseline smoke test.
-5. Implement GGCN/DeepGait:
-   - Generate Network: supervised low-level feature mapping.
-   - Encoder: Focal Convolution + pooling.
-   - Feature Mapping: PFRE = AFRE + TPFE.
-   - Losses: BA+ triplet + L1 mapping losses.
-6. Evaluate NM / BG / CL using gallery NM01-04 and probes NM05-06, BG01-02, CL01-02.
-7. Add query-gallery inference demo.
-8. Package report, results, screenshots and presentation.
+- **Kunchapu Nikhil Sai** — 23761A1227
+- **Gundlathota Krishnaveni** — 23761A1222
+- **Eda Sai Kiran** — 24765A1203
 
-## Paper training settings
-- CASIA-B train subjects: 001-074.
-- Test subjects: 075-124.
-- 30 randomly selected frames per gait sequence.
-- Per training batch: 4 subjects; per subject 6 NM + 2 BG + 2 CL sequences.
-- Adam learning rate: 1e-4.
-- Triplet margin: 0.2.
-- Mapping loss weights: lambda_g1=0.01, lambda_g2=0.1.
-- Paper full run: 160K iterations on 2x NVIDIA 2080Ti.
+**Guide:** Mrs. R. Pavitra, Assistant Professor  
+**Department:** Information Technology  
+**College:** Lakireddy Bali Reddy College of Engineering (LBRCE)  
+**Batch:** 9
 
-## Current machine note
-This laptop has AMD Radeon 760M and PyTorch is CPU-only. Dataset preparation, code development, inference smoke tests and small-scale checks can run locally. Full paper-scale training should be run on an NVIDIA GPU environment (Kaggle/Colab/local CUDA machine).
+## Overview
 
-## Verified implementation status — 2026-10-29
-- CASIA-B raw extraction and source-integrity comparison completed.
-- Custom 64x44 preprocessing completed.
-- 13,572 processed PKLs validated previously; final re-validation script is included and rerunnable.
-- Generate Network, Encoder Network, AFRE, TPFE, feature fusion and Euclidean distance utilities implemented.
-- Fixed PyTorch device-transfer bug caused by overriding nn.Module._apply.
-- Paired NM/BG/CL dataloader implemented.
-- Batch-all triplet loss implemented.
-- CPU smoke training completed successfully with non-zero gradients and checkpoint output.
-- GPU full-training script implemented with CUDA guard and checkpoint resume/save support.
-- CASIA-B evaluation and query-inference scripts implemented; they reject smoke-only checkpoints for accuracy/identification claims.
-- Editable Draw.io diagrams and reviewed PNG exports stored in docs/diagrams.
-- Full GPU training and final NM/BG/CL accuracy remain pending because this machine has no CUDA GPU.
+DeepGait is a gait-based biometric identification system designed to recognize people from walking silhouette sequences under multiple appearance conditions.
 
-## Target performance range
-For project planning and presentation, the expected target Rank-1 performance after full-scale training is **85%–96% overall**, with indicative condition-wise targets of **NM 92%–96%, BG 88%–94%, and CL 85%–90%**. These are target ranges, not measured final accuracy from the current CPU-only development machine. See [RESULTS.md](RESULTS.md).
+The project handles:
+
+1. **Normal walking (NM)**
+2. **Bag carrying (BG)**
+3. **Clothing variation (CL)**
+
+The implemented pipeline combines a **Generate Network**, a **Focal-Convolution Encoder**, and a **part-relation feature-fusion stage using AFRE + TPFE** to produce a discriminative gait embedding.
+
+## System Pipeline
+
+```text
+CASIA-B Silhouette Sequences
+            ↓
+Custom 64 × 44 Preprocessing
+            ↓
+Generate Network
+      NM / BG / CL
+            ↓
+Focal-Convolution Encoder
+            ↓
+AFRE + TPFE Feature Mapping
+            ↓
+256 × 63 Gait Embedding
+            ↓
+Euclidean Distance Matching
+            ↓
+Predicted Subject Identity
+```
+
+## System Architecture
+
+![DeepGait System Architecture](docs/diagrams/01_System_Architecture.png)
+
+## Dataset
+
+The project uses the **CASIA-B gait dataset**.
+
+- Subjects: **124**
+- Camera views: **11**
+- Normal sequences: **NM01–NM06**
+- Bag sequences: **BG01–BG02**
+- Clothing sequences: **CL01–CL02**
+- Train subjects: **001–074**
+- Test subjects: **075–124**
+
+### Verified preprocessing statistics
+
+| Item | Count |
+|---|---:|
+| Raw sequence groups | 13,593 |
+| Valid processed PKLs | 13,572 |
+| Low-frame groups skipped | 21 |
+| Training PKLs | 8,092 |
+| Testing PKLs | 5,480 |
+| Corrupt PKLs in completed validation | 0 |
+
+All valid gait silhouettes are normalized to **64 × 44** before model input.
+
+## Model Architecture
+
+### 1. Generate Network
+Learns low-level mappings that reduce appearance variation between NM, BG and CL conditions.
+
+### 2. Encoder Network
+Uses focal convolution and pooling to extract body-part-aware spatial gait features.
+
+### 3. AFRE
+**Adjacent Feature Relation Extractor** models relationships between neighboring body regions.
+
+### 4. TPFE
+**Total-Partial Feature Extractor** combines global and local body information.
+
+### 5. Feature Fusion
+AFRE and TPFE are fused into a final embedding with shape:
+
+```text
+[B, 256, 63]
+```
+
+## Verified Implementation Result
+
+The complete training pipeline was validated locally using real processed CASIA-B PKLs through a CPU smoke-training run.
+
+| Metric | Verified Value |
+|---|---:|
+| Mapping Loss | 0.015856 |
+| Triplet Loss | 0.400042 |
+| Total Loss | 0.415898 |
+| Gradient Absolute Sum | 938.888092 |
+| Model Shape Test | PASS |
+| Dataset Quick Verification | PASS |
+| Python Compilation | PASS |
+
+The smoke test confirms successful forward pass, loss computation, backward propagation, non-zero gradients, optimizer update and checkpoint generation.
+
+## Target Performance
+
+The full-training configuration is designed to target strong Rank-1 recognition performance after large-scale training.
+
+| Condition | Target Range |
+|---|---:|
+| Normal walking (NM) | 92%–96% |
+| Bag carrying (BG) | 88%–94% |
+| Clothing variation (CL) | 85%–90% |
+
+> These are **project target ranges**, not fabricated measured final accuracy values. Final Rank-1 results must come from a full-trained checkpoint.
+
+## Evaluation Protocol
+
+**Gallery**
+- NM01–NM04
+
+**Probe sequences**
+- NM05–NM06
+- BG01–BG02
+- CL01–CL02
+
+**Matching**
+- Euclidean distance
+
+**Primary metric**
+- Rank-1 identification accuracy
+
+## Training Configuration
+
+- Optimizer: **Adam**
+- Learning rate: **1e-4**
+- Triplet margin: **0.2**
+- Frames per sequence: **30**
+- BG→NM mapping weight: **0.01**
+- CL→NM mapping weight: **0.1**
+- Full-scale target: **160,000 iterations**
+
+## Installation
+
+Recommended: **Python 3.11**
+
+```bash
+python -m pip install -r requirements.txt
+```
+
+On Windows:
+
+```text
+SETUP_PROJECT.bat
+```
+
+## Verification
+
+Run the project verification commands:
+
+```bash
+python -m py_compile src/deepgait_model.py src/dataset.py src/losses.py
+python scripts/quick_verify_processed.py
+python scripts/test_model_shapes.py
+```
+
+Or on Windows:
+
+```text
+VERIFY_PROJECT.bat
+```
+
+## CPU Smoke Training
+
+```bash
+python scripts/smoke_train.py --frames 2 --subjects 2 --steps 1
+```
+
+## Full GPU Training
+
+For large-scale training, use an NVIDIA CUDA environment such as Kaggle, Google Colab, or a CUDA workstation.
+
+```bash
+python scripts/train_gpu.py --iterations 160000 --subjects-per-batch 4 --frames 30
+```
+
+## Evaluation
+
+After obtaining a full-trained checkpoint:
+
+```bash
+python scripts/evaluate_casiab.py --checkpoint outputs/gpu_training/checkpoint_160000.pt
+```
+
+## Query Identification
+
+```bash
+python scripts/infer_query.py --checkpoint <full_checkpoint.pt> --query <query.pkl>
+```
+
+## Repository Structure
+
+```text
+DeepGait/
+├── configs/
+│   └── project.yaml
+├── src/
+│   ├── deepgait_model.py
+│   ├── dataset.py
+│   └── losses.py
+├── scripts/
+│   ├── preprocess_casiab_64x44.py
+│   ├── validate_pkl_64x44.py
+│   ├── quick_verify_processed.py
+│   ├── test_model_shapes.py
+│   ├── smoke_train.py
+│   ├── train_gpu.py
+│   ├── evaluate_casiab.py
+│   └── infer_query.py
+├── docs/
+│   ├── diagrams/
+│   ├── reference/
+│   ├── review/
+│   ├── System_Design_and_Methodology.md
+│   └── FINAL_VERIFICATION_REPORT.md
+├── outputs/
+├── RESULTS.md
+├── SETUP_PROJECT.bat
+├── VERIFY_PROJECT.bat
+├── requirements.txt
+└── README.md
+```
+
+## Important Files
+
+- `src/deepgait_model.py` — DeepGait model architecture
+- `src/dataset.py` — CASIA-B PKL dataloader
+- `src/losses.py` — batch-all triplet loss
+- `scripts/preprocess_casiab_64x44.py` — silhouette preprocessing
+- `scripts/smoke_train.py` — CPU training verification
+- `scripts/train_gpu.py` — full CUDA training
+- `scripts/evaluate_casiab.py` — CASIA-B evaluation
+- `scripts/infer_query.py` — query-gallery identification
+- `docs/diagrams/` — system-design diagrams
+- `docs/FINAL_VERIFICATION_REPORT.md` — final implementation audit
+- `RESULTS.md` — verified and target result summary
+
+## Base Research
+
+The project is inspired by:
+
+**Hao Qin, Zhenxue Chen, Qingqiang Guo, Q. M. Jonathan Wu, Mengxu Lu — “GGCN: Gait Recognition with Generate Network and Convolutional Neural Network,” Journal of Visual Communication and Image Representation, 2026.**
+
+Base-paper accuracy values are retained only as research references and are not presented as this implementation's measured results.
+
+## Current Project Status
+
+**Implementation and verification components completed:**
+
+- CASIA-B extraction and source verification
+- 64 × 44 preprocessing
+- Dataset validation
+- Generate Network
+- Focal-Convolution Encoder
+- AFRE and TPFE
+- Feature fusion
+- Dataloader
+- Batch-all triplet loss
+- CPU smoke training
+- Checkpoint generation
+- GPU training script
+- Evaluation script
+- Query inference
+- Editable Draw.io diagrams
+- Project documentation
+- GitHub repository packaging
+
+## Limitations
+
+- Full-scale CUDA training has not been executed on the current CPU-only development machine.
+- Final NM/BG/CL Rank-1 values must be generated from a full-trained checkpoint.
+- The current AFRE/TPFE implementation is a practical project adaptation of the referenced methodology.
+- Raw CASIA-B data and large model checkpoints are intentionally excluded from GitHub.
+
+## Academic Use
+
+This repository is maintained as a **final-year B.Tech academic project** for gait-recognition research, reproducibility and project evaluation.
