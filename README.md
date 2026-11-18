@@ -51,3 +51,6 @@ This laptop has AMD Radeon 760M and PyTorch is CPU-only. Dataset preparation, co
 - CASIA-B evaluation and query-inference scripts implemented; they reject smoke-only checkpoints for accuracy/identification claims.
 - Editable Draw.io diagrams and reviewed PNG exports stored in docs/diagrams.
 - Full GPU training and final NM/BG/CL accuracy remain pending because this machine has no CUDA GPU.
+
+## Target performance range
+For project planning and presentation, the expected target Rank-1 performance after full-scale training is **85%–96% overall**, with indicative condition-wise targets of **NM 92%–96%, BG 88%–94%, and CL 85%–90%**. These are target ranges, not measured final accuracy from the current CPU-only development machine. See [RESULTS.md](RESULTS.md).
